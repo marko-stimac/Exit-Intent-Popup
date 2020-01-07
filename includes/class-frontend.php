@@ -1,10 +1,8 @@
 <?php
 
-namespace bideja;
+namespace ms\ExitIntentPopup;
 
-if (!defined('ABSPATH')) {
-    exit;
-}
+defined('ABSPATH') || exit;
 
 class ExitPopup
 {
@@ -14,16 +12,18 @@ class ExitPopup
         add_action('wp_footer', array($this, 'showComponent' ));
     }
 
+	// Register scripts and styles
     public function enqueueScripts()
     {
         wp_register_style('exit-popup', plugins_url('../assets/exit-popup.css', __FILE__));
-        wp_register_script('exit-popup', 'https://cdn.jsdelivr.net/npm/exit-intent-popup@1.0.0/js/bioep.min.js', array('jquery'), false, true);
-        wp_register_script('exit-popup-settings', plugins_url('../assets/exit-popup.js', __FILE__), array('exit-popup'), false, true);
+        wp_register_script('exit-popup', 'https://cdn.jsdelivr.net/npm/exit-intent-popup@1.0.0/js/bioep.min.js', array('jquery'), null, true);
+        wp_register_script('exit-popup-settings', plugins_url('../assets/exit-popup.js', __FILE__), array('exit-popup'), null, true);
 
         wp_enqueue_style('exit-popup');
         wp_enqueue_script('exit-popup-settings');
     }
 
+	// Show content of template as a shortcode component
     public function showComponent()
     {
         include(plugin_dir_path(__FILE__) . '/template.php');
